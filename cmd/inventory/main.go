@@ -1,13 +1,17 @@
 package main
 
 import (
-	"os"
-	"os/signal"
-	"pkg/pkg/post/cmd/server"
-	"syscall"
-	"time"
+	"pkg/cmd/inventory/consumer"
+	"pkg/pkg/db"
+	"pkg/pkg/events"
+	"pkg/pkg/utils"
 
 	log "github.com/sirupsen/logrus"
+
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
 func init() {
@@ -19,10 +23,15 @@ func init() {
 	log.SetOutput(os.Stdout)
 
 	// Only log the warning severity or above.
-	log.SetLevel(log.WarnLevel)
+	log.SetLevel(log.DebugLevel)
 }
 
 func main() {
+
+	dbConn, err := db.NewDB()
+	if err != nil {
+		log.Panic("unable to connect to db.", err)
+	}
 	startTime := time.Now()
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
@@ -34,9 +43,13 @@ func main() {
 		os.Exit(0)
 	}()
 
-	s := server.Server{
-		Port: 8091,
+	c := consumer.Consumer{
+		Broker:          utils.BrokerAddress(),
+		Group:           utils.ConsumerGroup(),
+		Topic:           utils.OrderReceivedTopicName,
+		EventsDBManager: events.NewEventsDBManager(dbConn.PostgressDB),
+		DB:              dbConn,
 	}
 
-	log.Fatal(s.Serve())
+	log.Fatal(c.SubscribeAndListen())
 }

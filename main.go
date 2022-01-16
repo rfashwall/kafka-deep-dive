@@ -2,10 +2,10 @@ package main
 
 import (
 	"os"
-	"pkg/pkg/events"
-	orderevents "pkg/pkg/events/order"
-	ordermodel "pkg/pkg/order/pkg/model"
+	events "pkg/pkg/models"
+	order "pkg/pkg/models/order"
 	"pkg/pkg/publisher"
+	"pkg/pkg/utils"
 	"time"
 
 	log "github.com/sirupsen/logrus"
@@ -22,25 +22,25 @@ func init() {
 	log.SetOutput(os.Stdout)
 
 	// Only log the warning severity or above.
-	log.SetLevel(0)
+	log.SetLevel(log.WarnLevel)
 }
 
 func main() {
 	var err error
-	var order = ordermodel.Order{
+	var o = order.Order{
 		ID: uuid.New(),
 	}
 
-	var event = orderevents.OrderReceived{
+	var event = order.OrderReceived{
 		EventBase: events.BaseEvent{
 			EventID:        uuid.New(),
 			EventTimestamp: time.Now(),
 		},
-		EventBody: order,
+		EventBody: o,
 	}
 
-	if err = publisher.PublishEvent(event, "OrderReceived"); err != nil {
-		log.WithField("orderID", order.ID).Error(err.Error())
+	if err = publisher.PublishEvent(event, utils.OrderReceivedTopicName); err != nil {
+		log.WithField("orderID", o.ID).Error(err.Error())
 	} else {
 		log.WithField("event", event).Info("published event")
 	}

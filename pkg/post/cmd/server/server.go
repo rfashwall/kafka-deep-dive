@@ -6,7 +6,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"pkg/pkg/post/pkg/handlers"
+	"pkg/pkg/post/internal/handlers"
 )
 
 type Server struct {

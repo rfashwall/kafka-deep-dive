@@ -1,16 +1,15 @@
 package order
 
 import (
-	"pkg/pkg/events"
-	"pkg/pkg/order/pkg/model"
+	"pkg/pkg/models"
 	"time"
 
 	"github.com/google/uuid"
 )
 
 type OrderReceived struct {
-	EventBase events.BaseEvent
-	EventBody model.Order
+	EventBase models.BaseEvent
+	EventBody Order
 }
 
 func (or OrderReceived) ID() uuid.UUID {

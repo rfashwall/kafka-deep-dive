@@ -2,13 +2,13 @@ package publisher
 
 import (
 	"encoding/json"
-	"pkg/pkg/events"
+	"pkg/pkg/models"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	log "github.com/sirupsen/logrus"
 )
 
-func PublishEvent(event events.Event, topic string) error {
+func PublishEvent(event models.Event, topic string) error {
 	log.WithField("event", event).Info("attempting to publish event")
 
 	p, err := kafka.NewProducer(&kafka.ConfigMap{
