@@ -3,9 +3,10 @@ package main
 import (
 	"os"
 	"os/signal"
-	"pkg/pkg/order/cmd/server"
 	"syscall"
 	"time"
+
+	"github.com/rfashwall/kafka-deep-dive/pkg/order/cmd/server"
 
 	log "github.com/sirupsen/logrus"
 )

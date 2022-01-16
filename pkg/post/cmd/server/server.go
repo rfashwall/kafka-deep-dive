@@ -6,7 +6,7 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"pkg/pkg/post/internal/handlers"
+	"github.com/rfashwall/kafka-deep-dive/pkg/post/internal/handlers"
 )
 
 type Server struct {

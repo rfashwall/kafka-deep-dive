@@ -3,8 +3,9 @@ package events
 import (
 	"context"
 	"errors"
-	"pkg/pkg/models"
 	"time"
+
+	"github.com/rfashwall/kafka-deep-dive/pkg/models"
 
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgx/v4"

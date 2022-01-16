@@ -2,11 +2,12 @@ package main
 
 import (
 	"os"
-	events "pkg/pkg/models"
-	order "pkg/pkg/models/order"
-	"pkg/pkg/publisher"
-	"pkg/pkg/utils"
 	"time"
+
+	events "github.com/rfashwall/kafka-deep-dive/pkg/models"
+	order "github.com/rfashwall/kafka-deep-dive/pkg/models/order"
+	"github.com/rfashwall/kafka-deep-dive/pkg/publisher"
+	"github.com/rfashwall/kafka-deep-dive/pkg/utils"
 
 	log "github.com/sirupsen/logrus"
 

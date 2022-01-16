@@ -1,10 +1,9 @@
 package main
 
 import (
-	"pkg/cmd/inventory/consumer"
-	"pkg/pkg/db"
-	"pkg/pkg/events"
-	"pkg/pkg/utils"
+	"github.com/rfashwall/kafka-deep-dive/pkg/utils"
+
+	"github.com/rfashwall/kafka-deep-dive/cmd/inventory/consumer"
 
 	log "github.com/sirupsen/logrus"
 
@@ -28,10 +27,10 @@ func init() {
 
 func main() {
 
-	dbConn, err := db.NewDB()
-	if err != nil {
-		log.Panic("unable to connect to db.", err)
-	}
+	//dbConn, err := db.NewDB()
+	// if err != nil {
+	// 	log.Panic("unable to connect to db.", err)
+	// }
 	startTime := time.Now()
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
@@ -44,11 +43,11 @@ func main() {
 	}()
 
 	c := consumer.Consumer{
-		Broker:          utils.BrokerAddress(),
-		Group:           utils.ConsumerGroup(),
-		Topic:           utils.OrderReceivedTopicName,
-		EventsDBManager: events.NewEventsDBManager(dbConn.PostgressDB),
-		DB:              dbConn,
+		Broker: utils.BrokerAddress(),
+		Group:  utils.ConsumerGroup(),
+		Topic:  utils.OrderReceivedTopicName,
+		//EventsDBManager: events.NewEventsDBManager(dbConn.PostgressDB),
+		//DB:              dbConn,
 	}
 
 	log.Fatal(c.SubscribeAndListen())

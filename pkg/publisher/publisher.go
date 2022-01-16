@@ -2,7 +2,8 @@ package publisher
 
 import (
 	"encoding/json"
-	"pkg/pkg/models"
+
+	"github.com/rfashwall/kafka-deep-dive/pkg/models"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	log "github.com/sirupsen/logrus"

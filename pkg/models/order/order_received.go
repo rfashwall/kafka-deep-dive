@@ -1,8 +1,9 @@
 package order
 
 import (
-	"pkg/pkg/models"
 	"time"
+
+	"github.com/rfashwall/kafka-deep-dive/pkg/models"
 
 	"github.com/google/uuid"
 )

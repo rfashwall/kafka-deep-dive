@@ -3,11 +3,12 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
-	events "pkg/pkg/models"
-	ordermodel "pkg/pkg/models/order"
-	"pkg/pkg/publisher"
-	"pkg/pkg/utils"
 	"time"
+
+	events "github.com/rfashwall/kafka-deep-dive/pkg/models"
+	ordermodel "github.com/rfashwall/kafka-deep-dive/pkg/models/order"
+	"github.com/rfashwall/kafka-deep-dive/pkg/publisher"
+	"github.com/rfashwall/kafka-deep-dive/pkg/utils"
 
 	"github.com/google/uuid"
 	log "github.com/sirupsen/logrus"

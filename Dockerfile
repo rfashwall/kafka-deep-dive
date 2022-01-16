@@ -2,7 +2,7 @@ FROM golang:1.17.6-alpine AS build
 
 # WORKDIR /src/
 # COPY main.go go.* /src/
-# RUN CGO_ENABLED=0 go build -o /bin/inventory
+# RUN CGO_ENABLED=0 go build -o inventory cmd/inventory
 
 # FROM scratch
 # COPY --from=build /bin/inventory /bin/inventory
@@ -12,12 +12,19 @@ FROM golang:1.17.6-alpine AS build
 
 # Set the current working directory inside the container
 WORKDIR /build
-RUN git config --global url
-RUN git config --global url."https://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@github.com/".insteadOf "https://github.com/"
+# RUN git config --global url
+#Pass the content of the private key into the container
+RUN mkdir /root/.ssh/
+RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+#Github requires a private key with strict permission settings
+RUN chmod 600 /root/.ssh/id_rsa
+#Add Github to known hosts
+RUN touch /root/.ssh/known_hosts
+RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
-# Copy go.mod, go.sum files and download deps
-COPY go.mod go.sum ./
-RUN go mod download
+ #Copy go.mod, go.sum files and download deps
+ COPY go.mod go.sum ./
+ RUN go mod init
 
 # Copy sources to the working directory
 COPY . .

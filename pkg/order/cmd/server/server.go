@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 
-	"pkg/pkg/order/internal/handlers"
+	"github.com/rfashwall/kafka-deep-dive/pkg/order/internal/handlers"
 )
 
 type Server struct {
