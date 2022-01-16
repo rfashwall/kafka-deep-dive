@@ -23,9 +23,9 @@ func PublishEvent(event models.Event, topic string) error {
 
 	deliveryChan := make(chan kafka.Event)
 
-	var value []byte
+	value, err := json.Marshal(event)
 
-	if value, err = json.Marshal(event); err != nil {
+	if err != nil {
 		return err
 	}
 
